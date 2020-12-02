@@ -1,10 +1,10 @@
-package eu.gitcode.moviesbrowser
+package eu.gitcode.moviesbrowser.movies.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import eu.gitcode.moviesbrowser.ui.main.MoviesListFragment
+import eu.gitcode.moviesbrowser.R
 
-class MainActivity : AppCompatActivity() {
+class MoviesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
