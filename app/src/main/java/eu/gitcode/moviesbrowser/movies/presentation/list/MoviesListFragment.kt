@@ -19,6 +19,7 @@ class MoviesListFragment : Fragment(R.layout.movies_list_fragment),
         super.onViewCreated(view, savedInstanceState)
         setupAdapter()
         setupViewState()
+        viewModel.loadData()
     }
 
     override fun onMovieClicked(id: Long) {
