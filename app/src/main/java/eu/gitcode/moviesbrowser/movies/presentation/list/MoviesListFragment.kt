@@ -1,12 +1,12 @@
-package eu.gitcode.moviesbrowser.movies.presentation
+package eu.gitcode.moviesbrowser.movies.presentation.list
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import eu.gitcode.moviesbrowser.R
-import eu.gitcode.moviesbrowser.movies.domain.enum.MovieType
-import eu.gitcode.moviesbrowser.movies.domain.model.MovieDomainModel
+import eu.gitcode.moviesbrowser.movies.presentation.details.MovieDetailsFragment
 import kotlinx.android.synthetic.main.movies_list_fragment.*
 import org.koin.android.ext.android.inject
 
@@ -17,46 +17,42 @@ class MoviesListFragment : Fragment(R.layout.movies_list_fragment),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        moviesRecyclerView.apply {
-            adapter = moviesAdapter
-            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        }
-        mockData() // TODO: 06/12/2020
+        setupAdapter()
+        setupViewState()
     }
 
     override fun onMovieClicked(id: Long) {
         parentFragmentManager.beginTransaction()
-            .replace(R.id.container, MovieFragment.newInstance())
+            .replace(R.id.container, MovieDetailsFragment.newInstance())
             .addToBackStack(null)
             .commit()
     }
 
     override fun onShowClicked(id: Long) {
         parentFragmentManager.beginTransaction()
-            .replace(R.id.container, MovieFragment.newInstance())
+            .replace(R.id.container, MovieDetailsFragment.newInstance())
             .addToBackStack(null)
             .commit()
     }
 
-    private fun mockData() {
-        moviesAdapter.setItems(
-            listOf(
-                MovieDomainModel(
-                    1,
-                    MovieType.MOVIE,
-                    "Lion King",
-                    1993,
-                    1500
-                ),
-                MovieDomainModel(
-                    3,
-                    MovieType.SHOW,
-                    "Matrix",
-                    2000,
-                    11111
-                )
-            )
-        )
+    private fun setupViewState() {
+        viewModel.moviesListData.observe(viewLifecycleOwner, { state ->
+            when (state) {
+                is MoviesListState.Success -> {
+                    moviesAdapter.setItems(state.moviesList)
+                }
+                is MoviesListState.Error -> {
+                    Toast.makeText(context, state.throwable.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+    private fun setupAdapter() {
+        moviesRecyclerView.apply {
+            adapter = moviesAdapter
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        }
     }
 
     companion object {

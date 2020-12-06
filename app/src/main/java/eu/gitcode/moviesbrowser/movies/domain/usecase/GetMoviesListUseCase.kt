@@ -1,4 +1,7 @@
 package eu.gitcode.moviesbrowser.movies.domain.usecase
 
-class GetMoviesListUseCase {
+import eu.gitcode.moviesbrowser.movies.domain.model.MovieDomainModel
+
+interface GetMoviesListUseCase {
+    suspend fun execute(): List<MovieDomainModel>
 }

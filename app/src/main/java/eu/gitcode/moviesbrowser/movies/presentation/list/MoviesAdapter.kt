@@ -1,4 +1,4 @@
-package eu.gitcode.moviesbrowser.movies.presentation
+package eu.gitcode.moviesbrowser.movies.presentation.list
 
 import android.view.LayoutInflater
 import android.view.View

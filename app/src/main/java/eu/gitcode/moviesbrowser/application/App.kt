@@ -2,6 +2,7 @@ package eu.gitcode.moviesbrowser.application
 
 import android.app.Application
 import eu.gitcode.moviesbrowser.BuildConfig
+import eu.gitcode.moviesbrowser.di.moviesModule
 import eu.gitcode.moviesbrowser.di.viewModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -24,7 +25,8 @@ class App : Application() {
         startKoin {
             androidContext(this@App)
             modules(
-                viewModule
+                viewModule,
+                moviesModule
             )
         }
     }

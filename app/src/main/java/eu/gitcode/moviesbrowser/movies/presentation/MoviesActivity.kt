@@ -3,6 +3,7 @@ package eu.gitcode.moviesbrowser.movies.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import eu.gitcode.moviesbrowser.R
+import eu.gitcode.moviesbrowser.movies.presentation.list.MoviesListFragment
 
 class MoviesActivity : AppCompatActivity() {
 
