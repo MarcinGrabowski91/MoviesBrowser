@@ -1,26 +1,12 @@
 package eu.gitcode.moviesbrowser.movies.domain.usecase
 
-import eu.gitcode.moviesbrowser.movies.domain.enum.MovieType
 import eu.gitcode.moviesbrowser.movies.domain.model.MovieDomainModel
+import eu.gitcode.moviesbrowser.movies.domain.repository.MoviesRepository
 
-class GetMoviesListUseCaseImpl : GetMoviesListUseCase {
-    // TODO: 06/12/2020 Add real data source
+class GetMoviesListUseCaseImpl(
+    private val moviesRepository: MoviesRepository
+) : GetMoviesListUseCase {
     override suspend fun execute(): List<MovieDomainModel> {
-        return listOf(
-            MovieDomainModel(
-                1,
-                MovieType.MOVIE,
-                "Lion King",
-                1993,
-                1500
-            ),
-            MovieDomainModel(
-                3,
-                MovieType.SHOW,
-                "Matrix",
-                2000,
-                11111
-            )
-        )
+        return moviesRepository.getMovies()
     }
 }
