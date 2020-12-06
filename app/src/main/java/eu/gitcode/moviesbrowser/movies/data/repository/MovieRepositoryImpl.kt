@@ -3,10 +3,9 @@ package eu.gitcode.moviesbrowser.movies.data.repository
 import eu.gitcode.moviesbrowser.movies.domain.enum.MovieType
 import eu.gitcode.moviesbrowser.movies.domain.model.FilmDomainModel
 import eu.gitcode.moviesbrowser.movies.domain.model.MovieDetailDomainModel
-import eu.gitcode.moviesbrowser.movies.domain.model.ShowDetailsDomainModel
-import eu.gitcode.moviesbrowser.movies.domain.repository.MoviesRepository
+import eu.gitcode.moviesbrowser.movies.domain.repository.MovieRepository
 
-class MoviesRepositoryImpl : MoviesRepository {
+class MovieRepositoryImpl : MovieRepository {
     override suspend fun getMoviesList(): List<FilmDomainModel> {
         return listOf(
             FilmDomainModel(
@@ -26,15 +25,7 @@ class MoviesRepositoryImpl : MoviesRepository {
         )
     }
 
-    override suspend fun getShowsList(): List<FilmDomainModel> {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun getMovieDetails(): MovieDetailDomainModel {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getShowDetails(): ShowDetailsDomainModel {
         TODO("Not yet implemented")
     }
 }

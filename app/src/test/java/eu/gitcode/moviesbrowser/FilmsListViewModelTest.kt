@@ -4,7 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import eu.gitcode.moviesbrowser.base.domain.BaseUseCase
 import eu.gitcode.moviesbrowser.movies.domain.enum.MovieType
 import eu.gitcode.moviesbrowser.movies.domain.model.FilmDomainModel
-import eu.gitcode.moviesbrowser.movies.domain.usecase.GetFilmsListUseCase
+import eu.gitcode.moviesbrowser.movies.domain.usecase.GetMoviesListUseCase
+import eu.gitcode.moviesbrowser.movies.domain.usecase.GetShowsListUseCase
 import eu.gitcode.moviesbrowser.movies.presentation.list.FilmsListState
 import eu.gitcode.moviesbrowser.movies.presentation.list.FilmsListViewModel
 import eu.gitcode.utils.CoroutineRule
@@ -27,19 +28,20 @@ class FilmsListViewModelTest {
     @get:Rule
     val coroutineTestRule = InstantTaskExecutorRule()
 
-    private val getFilmsListUseCase: GetFilmsListUseCase = mockk()
+    private val getMoviesListUseCase: GetMoviesListUseCase = mockk()
+    private val getShowsListUseCase: GetShowsListUseCase = mockk()
 
     private lateinit var filmsListViewModel: FilmsListViewModel
 
     @Before
     fun setUp() {
-        filmsListViewModel = FilmsListViewModel(getFilmsListUseCase)
+        filmsListViewModel = FilmsListViewModel(getMoviesListUseCase, getShowsListUseCase)
     }
 
     @Test
     fun `verify getMoviesUseCase execution`() {
         //given
-        coEvery { getFilmsListUseCase.execute() } returns BaseUseCase.Result.Success(
+        coEvery { getMoviesListUseCase.execute() } returns BaseUseCase.Result.Success(
             listOf()
         )
 
@@ -47,14 +49,14 @@ class FilmsListViewModelTest {
         filmsListViewModel.loadData()
 
         // then
-        coVerify { getFilmsListUseCase.execute() }
+        coVerify { getMoviesListUseCase.execute() }
     }
 
     @Test
     fun `verify state value when getMoviesUseCase returns a value`() {
         val moviesList = listOf(EXAMPLE_MOVIE_MODEL)
         //given
-        coEvery { getFilmsListUseCase.execute() } returns BaseUseCase.Result.Success(
+        coEvery { getMoviesListUseCase.execute() } returns BaseUseCase.Result.Success(
             moviesList
         )
 
@@ -70,7 +72,7 @@ class FilmsListViewModelTest {
     @Test
     fun `verify state value when getMoviesUseCase returns an error`() {
         //given
-        coEvery { getFilmsListUseCase.execute() } returns
+        coEvery { getMoviesListUseCase.execute() } returns
                 BaseUseCase.Result.Error(
                     Throwable()
                 )

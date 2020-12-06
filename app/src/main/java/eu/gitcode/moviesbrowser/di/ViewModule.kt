@@ -7,7 +7,8 @@ import org.koin.dsl.module
 val viewModule = module {
     viewModel {
         FilmsListViewModel(
-            getFilmsListUseCase = get()
+            getMoviesListUseCase = get(),
+            getShowsListUseCase = get()
         )
     }
 }

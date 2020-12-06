@@ -1,5 +1,7 @@
 package eu.gitcode.moviesbrowser.movies.data.model
 
+import eu.gitcode.moviesbrowser.movies.domain.model.MovieDetailDomainModel
+
 data class MovieDetailsDataModel(
     val available_translations: List<String>,
     val certification: String,
@@ -24,7 +26,29 @@ data class MovieDetailsDataModel(
     data class Ids(
         val imdb: String,
         val slug: String,
-        val tmdb: Int,
-        val trakt: Int
+        val tmdb: Long,
+        val trakt: Long
     )
 }
+
+fun MovieDetailsDataModel.toDomainModel() = MovieDetailDomainModel(
+    traktId = ids.trakt,
+    availableTranslations = available_translations,
+    certification = certification,
+    commentCount = comment_count,
+    country = country,
+    genres = genres,
+    homepage = homepage,
+    language = language,
+    overview = overview,
+    rating = rating,
+    released = released,
+    runtime = runtime,
+    status = status,
+    tagline = tagline,
+    title = title,
+    trailer = trailer,
+    updatedAt = updated_at,
+    votes = votes,
+    year = year
+)

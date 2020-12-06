@@ -1,7 +1,7 @@
 package eu.gitcode.moviesbrowser.movies.domain.model
 
 data class MovieDetailDomainModel(
-    val trakt: Long,
+    val traktId: Long,
     val availableTranslations: List<String>,
     val certification: String,
     val commentCount: Int,
