@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import eu.gitcode.moviesbrowser.R
 import eu.gitcode.moviesbrowser.databinding.MoviesListFragmentBinding
-import eu.gitcode.moviesbrowser.films.presentation.details.MovieDetailsFragment
+import eu.gitcode.moviesbrowser.films.presentation.movie.MovieFragment
 import org.koin.android.ext.android.inject
 
 class FilmsListFragment : Fragment(R.layout.movies_list_fragment),
@@ -43,14 +43,14 @@ class FilmsListFragment : Fragment(R.layout.movies_list_fragment),
 
     override fun onMovieClicked(id: Long) {
         parentFragmentManager.beginTransaction()
-            .replace(R.id.container, MovieDetailsFragment.newInstance())
+            .replace(R.id.container, MovieFragment.newInstance())
             .addToBackStack(null)
             .commit()
     }
 
     override fun onShowClicked(id: Long) {
         parentFragmentManager.beginTransaction()
-            .replace(R.id.container, MovieDetailsFragment.newInstance())
+            .replace(R.id.container, MovieFragment.newInstance())
             .addToBackStack(null)
             .commit()
     }
