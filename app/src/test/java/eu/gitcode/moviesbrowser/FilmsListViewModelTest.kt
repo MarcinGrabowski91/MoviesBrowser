@@ -2,12 +2,12 @@ package eu.gitcode.moviesbrowser
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import eu.gitcode.moviesbrowser.base.domain.BaseUseCase
-import eu.gitcode.moviesbrowser.movies.domain.enum.MovieType
-import eu.gitcode.moviesbrowser.movies.domain.model.FilmDomainModel
-import eu.gitcode.moviesbrowser.movies.domain.usecase.GetMoviesListUseCase
-import eu.gitcode.moviesbrowser.movies.domain.usecase.GetShowsListUseCase
-import eu.gitcode.moviesbrowser.movies.presentation.list.FilmsListState
-import eu.gitcode.moviesbrowser.movies.presentation.list.FilmsListViewModel
+import eu.gitcode.moviesbrowser.films.domain.enum.MovieType
+import eu.gitcode.moviesbrowser.films.domain.model.FilmDomainModel
+import eu.gitcode.moviesbrowser.films.domain.usecase.GetMoviesListUseCase
+import eu.gitcode.moviesbrowser.films.domain.usecase.GetShowsListUseCase
+import eu.gitcode.moviesbrowser.films.presentation.list.FilmsListState
+import eu.gitcode.moviesbrowser.films.presentation.list.FilmsListViewModel
 import eu.gitcode.utils.CoroutineRule
 import io.mockk.coEvery
 import io.mockk.coVerify

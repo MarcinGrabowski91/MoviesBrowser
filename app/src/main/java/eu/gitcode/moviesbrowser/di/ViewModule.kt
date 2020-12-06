@@ -1,6 +1,6 @@
 package eu.gitcode.moviesbrowser.di
 
-import eu.gitcode.moviesbrowser.movies.presentation.list.FilmsListViewModel
+import eu.gitcode.moviesbrowser.films.presentation.list.FilmsListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
