@@ -64,7 +64,7 @@ class FilmsListViewModelTest {
         filmsListViewModel.loadData()
 
         // then
-        val value = filmsListViewModel.moviesListData.value
+        val value = filmsListViewModel.filmsListData.value
         assert((value as FilmsListState.Success).moviesList.size == moviesList.size)
         assert(value.moviesList[0] == EXAMPLE_MOVIE_MODEL)
     }
@@ -81,7 +81,7 @@ class FilmsListViewModelTest {
         filmsListViewModel.loadData()
 
         // then
-        assert(filmsListViewModel.moviesListData.value is FilmsListState.Error)
+        assert(filmsListViewModel.filmsListData.value is FilmsListState.Error)
     }
 
     companion object {

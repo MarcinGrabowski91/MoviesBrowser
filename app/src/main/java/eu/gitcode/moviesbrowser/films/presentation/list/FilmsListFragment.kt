@@ -1,44 +1,28 @@
 package eu.gitcode.moviesbrowser.films.presentation.list
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import eu.gitcode.moviesbrowser.R
-import eu.gitcode.moviesbrowser.databinding.MoviesListFragmentBinding
+import eu.gitcode.moviesbrowser.databinding.FilmsListFragmentBinding
 import eu.gitcode.moviesbrowser.films.presentation.movie.MovieFragment
+import eu.gitcode.moviesbrowser.utils.viewBinding
 import org.koin.android.ext.android.inject
 
-class FilmsListFragment : Fragment(R.layout.movies_list_fragment),
+class FilmsListFragment : Fragment(R.layout.films_list_fragment),
     FilmsAdapter.MoviesAdapterListener {
     private val viewModel: FilmsListViewModel by inject()
-    private var _binding: MoviesListFragmentBinding? = null
-    private val binding get() = _binding!!
+    private val binding: FilmsListFragmentBinding by viewBinding(FilmsListFragmentBinding::bind)
 
-    private val moviesAdapter = FilmsAdapter(this)
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = MoviesListFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    private val filmsAdapter = FilmsAdapter(this)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupAdapter()
         setupViewState()
         viewModel.loadData()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onMovieClicked(id: Long) {
@@ -56,10 +40,10 @@ class FilmsListFragment : Fragment(R.layout.movies_list_fragment),
     }
 
     private fun setupViewState() {
-        viewModel.moviesListData.observe(viewLifecycleOwner, { state ->
+        viewModel.filmsListData.observe(viewLifecycleOwner, { state ->
             when (state) {
                 is FilmsListState.Success -> {
-                    moviesAdapter.setItems(state.moviesList)
+                    filmsAdapter.setItems(state.moviesList)
                 }
                 is FilmsListState.Error -> {
                     Toast.makeText(context, state.throwable.message, Toast.LENGTH_SHORT).show()
@@ -69,8 +53,8 @@ class FilmsListFragment : Fragment(R.layout.movies_list_fragment),
     }
 
     private fun setupAdapter() {
-        binding.moviesRecyclerView.apply {
-            adapter = moviesAdapter
+        binding.filmsRecyclerView.apply {
+            adapter = filmsAdapter
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
     }

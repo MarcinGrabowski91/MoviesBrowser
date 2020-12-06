@@ -13,15 +13,15 @@ class FilmsListViewModel(
     private val getShowsListUseCase: GetShowsListUseCase
 ) : ViewModel() {
 
-    val moviesListData = MutableLiveData<FilmsListState>()
+    val filmsListData = MutableLiveData<FilmsListState>()
 
     fun loadData() {
         viewModelScope.launch {
             getMoviesListUseCase.execute().also { result ->
                 when (result) {
-                    is BaseUseCase.Result.Success -> moviesListData.value =
+                    is BaseUseCase.Result.Success -> filmsListData.value =
                         FilmsListState.Success(result.data)
-                    is BaseUseCase.Result.Error -> moviesListData.value =
+                    is BaseUseCase.Result.Error -> filmsListData.value =
                         FilmsListState.Error(result.error)
                 }
             }
