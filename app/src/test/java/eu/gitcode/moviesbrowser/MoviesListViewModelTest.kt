@@ -50,8 +50,8 @@ class MoviesListViewModelTest {
     }
 
     @Test
-    fun `verify success state when getMoviesUseCase returns a value`() {
-        val moviesList = listOf<MovieDomainModel>()
+    fun `verify state value when getMoviesUseCase returns a value`() {
+        val moviesList = listOf(EXAMPLE_MOVIE_MODEL)
         //given
         coEvery { getMoviesListUseCase.execute() } returns GetMoviesListUseCase.Result.Success(
             moviesList
@@ -60,8 +60,10 @@ class MoviesListViewModelTest {
         // when
         moviesListViewModel.loadData()
 
-        // them
-        assert(moviesListViewModel.moviesListData.value is MoviesListState.Success)
+        // then
+        val value = moviesListViewModel.moviesListData.value
+        assert((value as MoviesListState.Success).moviesList.size == moviesList.size)
+        assert(value.moviesList[0] == EXAMPLE_MOVIE_MODEL)
     }
 
     @Test
