@@ -65,23 +65,6 @@ class MoviesListViewModelTest {
     }
 
     @Test
-    fun `verify state value when getMoviesUseCase returns a value`() {
-        val moviesList = listOf(EXAMPLE_MOVIE_MODEL)
-        //given
-        coEvery { getMoviesListUseCase.execute() } returns GetMoviesListUseCase.Result.Success(
-            moviesList
-        )
-
-        // when
-        moviesListViewModel.loadData()
-
-        // then
-        val value = moviesListViewModel.moviesListData.value
-        assert((value as MoviesListState.Success).moviesList.size == moviesList.size)
-        assert(value.moviesList[0] == EXAMPLE_MOVIE_MODEL)
-    }
-
-    @Test
     fun `verify state value when getMoviesUseCase returns an error`() {
         //given
         coEvery { getMoviesListUseCase.execute() } returns
