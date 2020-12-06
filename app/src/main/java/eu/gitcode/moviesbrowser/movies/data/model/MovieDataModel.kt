@@ -1,7 +1,7 @@
 package eu.gitcode.moviesbrowser.movies.data.model
 
 import eu.gitcode.moviesbrowser.movies.domain.enum.MovieType
-import eu.gitcode.moviesbrowser.movies.domain.model.MovieDomainModel
+import eu.gitcode.moviesbrowser.movies.domain.model.FilmDomainModel
 
 data class MovieDataModel(
     val movie: Movie,
@@ -21,7 +21,7 @@ data class MovieDataModel(
     }
 }
 
-fun MovieDataModel.toDomainModel() = MovieDomainModel(
+fun MovieDataModel.toDomainModel() = FilmDomainModel(
     id = movie.ids.trakt,
     type = MovieType.MOVIE,
     title = movie.title,

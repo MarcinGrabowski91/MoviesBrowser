@@ -1,11 +1,12 @@
 package eu.gitcode.moviesbrowser
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import eu.gitcode.moviesbrowser.base.domain.BaseUseCase
 import eu.gitcode.moviesbrowser.movies.domain.enum.MovieType
-import eu.gitcode.moviesbrowser.movies.domain.model.MovieDomainModel
-import eu.gitcode.moviesbrowser.movies.domain.usecase.GetMoviesListUseCase
-import eu.gitcode.moviesbrowser.movies.presentation.list.MoviesListState
-import eu.gitcode.moviesbrowser.movies.presentation.list.MoviesListViewModel
+import eu.gitcode.moviesbrowser.movies.domain.model.FilmDomainModel
+import eu.gitcode.moviesbrowser.movies.domain.usecase.GetFilmsListUseCase
+import eu.gitcode.moviesbrowser.movies.presentation.list.FilmsListState
+import eu.gitcode.moviesbrowser.movies.presentation.list.FilmsListViewModel
 import eu.gitcode.utils.CoroutineRule
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -18,7 +19,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
-class MoviesListViewModelTest {
+class FilmsListViewModelTest {
     @ExperimentalCoroutinesApi
     @get:Rule
     var coroutinesTestRule = CoroutineRule()
@@ -26,63 +27,63 @@ class MoviesListViewModelTest {
     @get:Rule
     val coroutineTestRule = InstantTaskExecutorRule()
 
-    private val getMoviesListUseCase: GetMoviesListUseCase = mockk()
+    private val getFilmsListUseCase: GetFilmsListUseCase = mockk()
 
-    private lateinit var moviesListViewModel: MoviesListViewModel
+    private lateinit var filmsListViewModel: FilmsListViewModel
 
     @Before
     fun setUp() {
-        moviesListViewModel = MoviesListViewModel(getMoviesListUseCase)
+        filmsListViewModel = FilmsListViewModel(getFilmsListUseCase)
     }
 
     @Test
     fun `verify getMoviesUseCase execution`() {
         //given
-        coEvery { getMoviesListUseCase.execute() } returns GetMoviesListUseCase.Result.Success(
+        coEvery { getFilmsListUseCase.execute() } returns BaseUseCase.Result.Success(
             listOf()
         )
 
         // when
-        moviesListViewModel.loadData()
+        filmsListViewModel.loadData()
 
         // then
-        coVerify { getMoviesListUseCase.execute() }
+        coVerify { getFilmsListUseCase.execute() }
     }
 
     @Test
     fun `verify state value when getMoviesUseCase returns a value`() {
         val moviesList = listOf(EXAMPLE_MOVIE_MODEL)
         //given
-        coEvery { getMoviesListUseCase.execute() } returns GetMoviesListUseCase.Result.Success(
+        coEvery { getFilmsListUseCase.execute() } returns BaseUseCase.Result.Success(
             moviesList
         )
 
         // when
-        moviesListViewModel.loadData()
+        filmsListViewModel.loadData()
 
         // then
-        val value = moviesListViewModel.moviesListData.value
-        assert((value as MoviesListState.Success).moviesList.size == moviesList.size)
+        val value = filmsListViewModel.moviesListData.value
+        assert((value as FilmsListState.Success).moviesList.size == moviesList.size)
         assert(value.moviesList[0] == EXAMPLE_MOVIE_MODEL)
     }
 
     @Test
     fun `verify state value when getMoviesUseCase returns an error`() {
         //given
-        coEvery { getMoviesListUseCase.execute() } returns
-                GetMoviesListUseCase.Result.Error(
+        coEvery { getFilmsListUseCase.execute() } returns
+                BaseUseCase.Result.Error(
                     Throwable()
                 )
 
         // when
-        moviesListViewModel.loadData()
+        filmsListViewModel.loadData()
 
         // then
-        assert(moviesListViewModel.moviesListData.value is MoviesListState.Error)
+        assert(filmsListViewModel.moviesListData.value is FilmsListState.Error)
     }
 
     companion object {
-        private val EXAMPLE_MOVIE_MODEL = MovieDomainModel(
+        private val EXAMPLE_MOVIE_MODEL = FilmDomainModel(
             1,
             MovieType.MOVIE,
             "Lion King",
