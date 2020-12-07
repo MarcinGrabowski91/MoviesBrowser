@@ -10,7 +10,7 @@ data class MovieDetailDomainModel(
     val homepage: String,
     val language: String,
     val overview: String,
-    val rating: Int,
+    val rating: Float,
     val released: String,
     val runtime: Int,
     val status: String,

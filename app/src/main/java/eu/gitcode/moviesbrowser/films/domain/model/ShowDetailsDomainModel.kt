@@ -14,7 +14,7 @@ data class ShowDetailsDomainModel(
     val language: String,
     val network: String,
     val overview: String,
-    val rating: Int,
+    val rating: Float,
     val runtime: Int,
     val status: String,
     val title: String,

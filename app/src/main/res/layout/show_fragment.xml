@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?colorShow"
     android:orientation="vertical"
     android:padding="8dp">
 
@@ -10,6 +11,88 @@
         android:id="@+id/showFragmentTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="@dimen/font_size_xxl"
+        android:textStyle="bold"
         tools:text="Lion King" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        tools:text="Overview" />
+
+    <TextView
+        android:id="@+id/showFragmentOverview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Film about lion who is a king" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rating"
+        android:textStyle="bold" />
+
+    <RatingBar
+        android:id="@+id/showFragmentRatingBar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="10"
+        android:isIndicator="true"
+        android:stepSize="0.1"
+        android:progressTint="?colorPrimary"
+        android:saveEnabled="false"
+        tools:rating="2.5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="@string/year" />
+
+    <TextView
+        android:id="@+id/showFragmentYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="1993" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/genres"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/showFragmentGenres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Horror" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/country"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/showFragmentCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="USA" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/votes"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/showFragmentVotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="11201" />
 
 </LinearLayout>

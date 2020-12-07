@@ -45,7 +45,7 @@ class ShowRepositoryImpl : ShowRepository {
             language = "ENG",
             network = "HBO",
             overview = "Story about the lion",
-            rating = 5,
+            rating = 5F,
             runtime = 130,
             status = "Released",
             title = "Lion King",

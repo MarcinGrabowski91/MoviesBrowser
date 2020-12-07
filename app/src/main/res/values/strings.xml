@@ -6,4 +6,9 @@
     <string name="error_occurred">Error occurred</string>
     <string name="movie">Movie</string>
     <string name="show">Show</string>
+    <string name="overview">Overview</string>
+    <string name="rating">Rating</string>
+    <string name="genres">Genres</string>
+    <string name="votes">Votes</string>
+    <string name="country">Country</string>
 </resources>

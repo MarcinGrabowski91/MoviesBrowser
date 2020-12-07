@@ -1,5 +1,6 @@
 package eu.gitcode.moviesbrowser.films.presentation.movie
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -25,11 +26,26 @@ class MovieFragment : Fragment(R.layout.movie_fragment) {
         viewModel.loadData()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupViewState() {
         viewModel.movieData.observe(viewLifecycleOwner, { state ->
             when (state) {
                 is MovieState.Success -> {
-                    // TODO: 07/12/2020 fill data
+                    binding.movieFragmentTitle.text = state.movie.title
+                    binding.movieFragmentOverview.text = state.movie.overview
+                    binding.movieFragmentRatingBar.rating =
+                        state.movie.rating / binding.movieFragmentRatingBar.numStars
+                    binding.movieFragmentYear.text = state.movie.year.toString()
+                    state.movie.genres.forEachIndexed { index, s ->
+                        binding.movieFragmentGenres.text =
+                            binding.movieFragmentGenres.text.toString() + s
+                        if (index != state.movie.genres.lastIndex) {
+                            binding.movieFragmentGenres.text =
+                                binding.movieFragmentGenres.text.toString() + ", "
+                        }
+                    }
+                    binding.movieFragmentCountry.text = state.movie.country
+                    binding.movieFragmentVotes.text = state.movie.votes.toString()
                 }
                 is MovieState.Error -> {
                     Toast.makeText(context, state.throwable.message, Toast.LENGTH_SHORT).show()

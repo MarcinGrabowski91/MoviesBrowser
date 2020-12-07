@@ -37,7 +37,7 @@ class MovieRepositoryImpl : MovieRepository {
             homepage = "www.lionking.com",
             language = "ENG",
             overview = "Story about the lion",
-            rating = 5,
+            rating = 5.0F,
             released = "2010-12-16",
             runtime = 130,
             status = "Released",
