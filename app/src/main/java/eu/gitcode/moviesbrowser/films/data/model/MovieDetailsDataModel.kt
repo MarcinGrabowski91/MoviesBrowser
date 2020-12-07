@@ -1,18 +1,21 @@
 package eu.gitcode.moviesbrowser.films.data.model
 
 import eu.gitcode.moviesbrowser.films.domain.model.MovieDetailDomainModel
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class MovieDetailsDataModel(
     val available_translations: List<String>,
     val certification: String,
     val comment_count: Int,
     val country: String,
     val genres: List<String>,
-    val homepage: String,
+    val homepage: String? = null,
     val ids: Ids,
     val language: String,
     val overview: String,
     val rating: Float,
+    val trailer: String? = null,
     val released: String,
     val runtime: Int,
     val status: String,
@@ -22,6 +25,7 @@ data class MovieDetailsDataModel(
     val votes: Int,
     val year: Int
 ) {
+    @Serializable
     data class Ids(
         val imdb: String,
         val slug: String,
@@ -39,6 +43,7 @@ fun MovieDetailsDataModel.toDomainModel() = MovieDetailDomainModel(
     genres = genres,
     homepage = homepage,
     language = language,
+    trailer = trailer,
     overview = overview,
     rating = rating,
     released = released,

@@ -6,14 +6,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import eu.gitcode.moviesbrowser.R
-import eu.gitcode.moviesbrowser.databinding.ShowFragmentBinding
+import eu.gitcode.moviesbrowser.databinding.DetailsFragmentBinding
+import eu.gitcode.moviesbrowser.utils.ResourcesUtils
 import eu.gitcode.moviesbrowser.utils.viewBinding
 import org.koin.android.ext.android.inject
 
-class ShowFragment : Fragment(R.layout.show_fragment) {
+class ShowFragment : Fragment(R.layout.details_fragment) {
 
     private val viewModel: ShowViewModel by inject()
-    private val binding: ShowFragmentBinding by viewBinding(ShowFragmentBinding::bind)
+    private val binding: DetailsFragmentBinding by viewBinding(DetailsFragmentBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,34 +25,44 @@ class ShowFragment : Fragment(R.layout.show_fragment) {
         super.onViewCreated(view, savedInstanceState)
         setupViewState()
         viewModel.loadData()
+        setupViews()
     }
 
     @SuppressLint("SetTextI18n")
     private fun setupViewState() {
         viewModel.showData.observe(viewLifecycleOwner, { state ->
+            binding.loadingLay.visibility = View.GONE
             when (state) {
                 is ShowState.Success -> {
-                    binding.showFragmentTitle.text = state.show.title
-                    binding.showFragmentOverview.text = state.show.overview
-                    binding.showFragmentRatingBar.rating =
-                        state.show.rating / binding.showFragmentRatingBar.numStars
-                    binding.showFragmentYear.text = state.show.year.toString()
+                    binding.detailsFragmentTitle.text = state.show.title
+                    binding.detailsFragmentOverview.text = state.show.overview
+                    binding.detailsFragmentRatingBar.rating = state.show.rating
+                    binding.detailsFragmentYear.text = state.show.year.toString()
                     state.show.genres.forEachIndexed { index, s ->
-                        binding.showFragmentGenres.text =
-                            binding.showFragmentGenres.text.toString() + s
+                        binding.detailsFragmentGenres.text =
+                            binding.detailsFragmentGenres.text.toString() + s
                         if (index != state.show.genres.lastIndex) {
-                            binding.showFragmentGenres.text =
-                                binding.showFragmentGenres.text.toString() + ", "
+                            binding.detailsFragmentGenres.text =
+                                binding.detailsFragmentGenres.text.toString() + ", "
                         }
                     }
-                    binding.showFragmentCountry.text = state.show.country
-                    binding.showFragmentVotes.text = state.show.votes.toString()
+                    binding.detailsFragmentCountry.text = state.show.country
+                    binding.detailsFragmentVotes.text = state.show.votes.toString()
                 }
                 is ShowState.Error -> {
                     Toast.makeText(context, state.throwable.message, Toast.LENGTH_SHORT).show()
                 }
             }
         })
+    }
+
+    private fun setupViews() {
+        binding.loadingLay.setBackgroundColor(
+            ResourcesUtils.getColorFromAttribute(
+                binding.loadingLay,
+                R.attr.colorShow
+            )
+        )
     }
 
     companion object {

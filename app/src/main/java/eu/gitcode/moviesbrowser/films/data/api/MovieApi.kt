@@ -14,9 +14,12 @@ interface MovieApi {
     ): List<MovieDataModel>
 
     @GET("movies/{id}")
-    suspend fun getMovieSummary(@Path("id") id: Long): MovieDetailsDataModel
+    suspend fun getMovieSummary(
+        @Path("id") id: Long,
+        @Query("extended") extended: String = "full"
+    ): MovieDetailsDataModel
 
     companion object {
-        private const val DEFAULT_PAGE_SIZE = 100
+        private const val DEFAULT_PAGE_SIZE = 5
     }
 }

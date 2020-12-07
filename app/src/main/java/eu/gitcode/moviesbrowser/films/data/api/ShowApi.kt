@@ -11,12 +11,12 @@ interface ShowApi {
     suspend fun getTrendingShows(
         @Query("years") years: String = "",
         @Query("limit") page: Int = DEFAULT_PAGE_SIZE
-    ): ShowDataModel
+    ): List<ShowDataModel>
 
     @GET("shows/{id}")
     suspend fun getShowSummary(@Path("id") id: Long): ShowDetailsDataModel
 
     companion object {
-        private const val DEFAULT_PAGE_SIZE = 100
+        private const val DEFAULT_PAGE_SIZE = 5
     }
 }
