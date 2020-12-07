@@ -119,11 +119,10 @@ class ShowViewModelTest {
             language = "",
             network = "",
             overview = "",
-            rating = 0,
+            rating = 0F,
             runtime = 0,
             status = "",
             title = "",
-            trailer = 0,
             updatedAt = "",
             votes = 0,
             year = 0
