@@ -21,6 +21,7 @@ class FilmsListFragment : Fragment(R.layout.films_list_fragment),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupViews()
         setupAdapter()
         setupViewState()
         viewModel.loadData()
@@ -40,8 +41,13 @@ class FilmsListFragment : Fragment(R.layout.films_list_fragment),
             .commit()
     }
 
+    private fun setupViews() {
+        binding.moviesListRefreshLay.setOnRefreshListener { viewModel.loadData() }
+    }
+
     private fun setupViewState() {
         viewModel.filmsListData.observe(viewLifecycleOwner, { state ->
+            binding.moviesListRefreshLay.isRefreshing = false
             when (state) {
                 is FilmsListState.Success -> {
                     filmsAdapter.setItems(state.filmsList)

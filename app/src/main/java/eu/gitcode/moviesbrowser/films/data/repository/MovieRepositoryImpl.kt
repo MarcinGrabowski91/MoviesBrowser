@@ -23,7 +23,7 @@ class MovieRepositoryImpl : MovieRepository {
                 11111,
                 2000
             )
-        )
+        ).shuffled()
     }
 
     override suspend fun getMovieDetails(movieId: Long): MovieDetailDomainModel {
