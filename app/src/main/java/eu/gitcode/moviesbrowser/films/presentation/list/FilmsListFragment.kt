@@ -42,6 +42,7 @@ class FilmsListFragment : Fragment(R.layout.films_list_fragment),
     private fun setupViews() {
         binding.filmsRecyclerView.adapter = filmsAdapter
         binding.moviesListRefreshLay.setOnRefreshListener { viewModel.loadData() }
+        binding.moviesListRefreshLay.isRefreshing = true
     }
 
     private fun setupViewState() {

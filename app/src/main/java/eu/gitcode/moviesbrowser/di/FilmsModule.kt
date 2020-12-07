@@ -11,7 +11,6 @@ import eu.gitcode.moviesbrowser.films.domain.usecase.GetShowsListUseCase
 import org.koin.dsl.module
 
 val filmsModule = module {
-
     single<MovieRepository> {
         MovieRepositoryImpl()
     }
