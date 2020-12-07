@@ -1,29 +1,15 @@
 package eu.gitcode.moviesbrowser.films.data.repository
 
-import eu.gitcode.moviesbrowser.films.domain.enum.MovieType
+import eu.gitcode.moviesbrowser.films.data.api.MovieApi
+import eu.gitcode.moviesbrowser.films.data.model.toDomainModel
 import eu.gitcode.moviesbrowser.films.domain.model.FilmDomainModel
 import eu.gitcode.moviesbrowser.films.domain.model.MovieDetailDomainModel
 import eu.gitcode.moviesbrowser.films.domain.repository.MovieRepository
 
-class MovieRepositoryImpl : MovieRepository {
+class MovieRepositoryImpl(private val movieApi: MovieApi) : MovieRepository {
     // TODO: 07/12/2020 Add logic
     override suspend fun getMoviesList(): List<FilmDomainModel> {
-        return listOf(
-            FilmDomainModel(
-                1,
-                MovieType.MOVIE,
-                "Lion King",
-                1500,
-                1993,
-            ),
-            FilmDomainModel(
-                3,
-                MovieType.MOVIE,
-                "Matrix",
-                11111,
-                2000
-            )
-        ).shuffled()
+        return movieApi.getTrendingMovies().map { it.toDomainModel() }
     }
 
     override suspend fun getMovieDetails(movieId: Long): MovieDetailDomainModel {

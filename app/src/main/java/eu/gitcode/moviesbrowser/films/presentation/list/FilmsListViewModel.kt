@@ -7,6 +7,7 @@ import eu.gitcode.moviesbrowser.base.domain.BaseUseCase
 import eu.gitcode.moviesbrowser.films.domain.usecase.GetMoviesListUseCase
 import eu.gitcode.moviesbrowser.films.domain.usecase.GetShowsListUseCase
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class FilmsListViewModel(
     private val getMoviesListUseCase: GetMoviesListUseCase,
@@ -21,8 +22,11 @@ class FilmsListViewModel(
                 when (result) {
                     is BaseUseCase.Result.Success -> filmsListData.value =
                         FilmsListState.Success(result.data)
-                    is BaseUseCase.Result.Error -> filmsListData.value =
-                        FilmsListState.Error(result.error)
+                    is BaseUseCase.Result.Error -> {
+                        Timber.e(result.error)
+                        filmsListData.value =
+                            FilmsListState.Error(result.error)
+                    }
                 }
             }
         }

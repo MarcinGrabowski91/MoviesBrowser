@@ -2,6 +2,7 @@ package eu.gitcode.moviesbrowser.application
 
 import android.app.Application
 import eu.gitcode.moviesbrowser.BuildConfig
+import eu.gitcode.moviesbrowser.di.apiModule
 import eu.gitcode.moviesbrowser.di.filmsModule
 import eu.gitcode.moviesbrowser.di.networkModule
 import eu.gitcode.moviesbrowser.di.viewModule
@@ -30,7 +31,8 @@ class App : Application() {
             modules(
                 viewModule,
                 filmsModule,
-                networkModule
+                networkModule,
+                apiModule
             )
         }
     }

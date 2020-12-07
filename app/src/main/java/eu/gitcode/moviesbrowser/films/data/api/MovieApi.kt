@@ -11,7 +11,7 @@ interface MovieApi {
     suspend fun getTrendingMovies(
         @Query("years") years: String = "",
         @Query("limit") page: Int = DEFAULT_PAGE_SIZE
-    ): MovieDataModel
+    ): List<MovieDataModel>
 
     @GET("movies/{id}")
     suspend fun getMovieSummary(@Path("id") id: Long): MovieDetailsDataModel

@@ -12,7 +12,7 @@ import org.koin.dsl.module
 
 val filmsModule = module {
     single<MovieRepository> {
-        MovieRepositoryImpl()
+        MovieRepositoryImpl(movieApi = get())
     }
 
     single<ShowRepository> {
