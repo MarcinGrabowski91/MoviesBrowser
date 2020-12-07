@@ -6,5 +6,5 @@ import eu.gitcode.moviesbrowser.films.domain.model.ShowDetailsDomainModel
 interface ShowRepository {
     suspend fun getShowsList(): List<FilmDomainModel>
 
-    suspend fun getShowDetails(): ShowDetailsDomainModel
+    suspend fun getShowDetails(showId: Long): ShowDetailsDomainModel
 }

@@ -14,8 +14,15 @@ class ShowFragment : Fragment(R.layout.show_fragment) {
     private val viewModel: ShowViewModel by inject()
     private val binding: ShowFragmentBinding by viewBinding(ShowFragmentBinding::bind)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.showId = arguments?.getLong(SHOW_ID_KEY)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupViewState()
+        viewModel.loadData()
     }
 
     private fun setupViewState() {
@@ -32,6 +39,12 @@ class ShowFragment : Fragment(R.layout.show_fragment) {
     }
 
     companion object {
-        fun newInstance() = ShowFragment()
+        private const val SHOW_ID_KEY = "showId"
+
+        fun newInstance(showId: Long) = ShowFragment().apply {
+            arguments = Bundle().apply {
+                putLong(SHOW_ID_KEY, showId)
+            }
+        }
     }
 }

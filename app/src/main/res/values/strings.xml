@@ -3,4 +3,5 @@
     <string name="title">Title</string>
     <string name="year">Year</string>
     <string name="watchers">Watchers</string>
+    <string name="error_occurred">Error occurred</string>
 </resources>

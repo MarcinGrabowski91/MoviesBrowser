@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import eu.gitcode.moviesbrowser.R
 import eu.gitcode.moviesbrowser.databinding.FilmsListFragmentBinding
 import eu.gitcode.moviesbrowser.films.presentation.movie.MovieFragment
+import eu.gitcode.moviesbrowser.films.presentation.show.ShowFragment
 import eu.gitcode.moviesbrowser.utils.viewBinding
 import org.koin.android.ext.android.inject
 
@@ -27,14 +28,14 @@ class FilmsListFragment : Fragment(R.layout.films_list_fragment),
 
     override fun onMovieClicked(id: Long) {
         parentFragmentManager.beginTransaction()
-            .replace(R.id.container, MovieFragment.newInstance())
+            .replace(R.id.container, MovieFragment.newInstance(id))
             .addToBackStack(null)
             .commit()
     }
 
     override fun onShowClicked(id: Long) {
         parentFragmentManager.beginTransaction()
-            .replace(R.id.container, MovieFragment.newInstance())
+            .replace(R.id.container, ShowFragment.newInstance(id))
             .addToBackStack(null)
             .commit()
     }
@@ -43,7 +44,7 @@ class FilmsListFragment : Fragment(R.layout.films_list_fragment),
         viewModel.filmsListData.observe(viewLifecycleOwner, { state ->
             when (state) {
                 is FilmsListState.Success -> {
-                    filmsAdapter.setItems(state.moviesList)
+                    filmsAdapter.setItems(state.filmsList)
                 }
                 is FilmsListState.Error -> {
                     Toast.makeText(context, state.throwable.message, Toast.LENGTH_SHORT).show()

@@ -25,7 +25,7 @@ class MovieRepositoryImpl : MovieRepository {
         )
     }
 
-    override suspend fun getMovieDetails(): MovieDetailDomainModel {
+    override suspend fun getMovieDetails(movieId: Long): MovieDetailDomainModel {
         TODO("Not yet implemented")
     }
 }

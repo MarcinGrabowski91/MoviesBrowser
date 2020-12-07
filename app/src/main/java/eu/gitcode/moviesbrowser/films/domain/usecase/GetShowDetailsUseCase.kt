@@ -7,8 +7,8 @@ import eu.gitcode.moviesbrowser.films.domain.repository.ShowRepository
 class GetShowDetailsUseCase(
     private val showRepository: ShowRepository
 ) : BaseUseCase() {
-    suspend fun execute(): Result<ShowDetailsDomainModel> = try {
-        Result.Success(showRepository.getShowDetails())
+    suspend fun execute(showId: Long): Result<ShowDetailsDomainModel> = try {
+        Result.Success(showRepository.getShowDetails(showId))
     } catch (e: Exception) {
         Result.Error(e)
     }

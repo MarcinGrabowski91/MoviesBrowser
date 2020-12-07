@@ -54,7 +54,7 @@ class FilmsListViewModelTest {
 
     @Test
     fun `verify state value when getMoviesUseCase returns a value`() {
-        val moviesList = listOf(EXAMPLE_MOVIE_MODEL)
+        val moviesList = listOf(EXAMPLE_FILM_MODEL)
         //given
         coEvery { getMoviesListUseCase.execute() } returns BaseUseCase.Result.Success(
             moviesList
@@ -65,8 +65,8 @@ class FilmsListViewModelTest {
 
         // then
         val value = filmsListViewModel.filmsListData.value
-        assert((value as FilmsListState.Success).moviesList.size == moviesList.size)
-        assert(value.moviesList[0] == EXAMPLE_MOVIE_MODEL)
+        assert((value as FilmsListState.Success).filmsList.size == moviesList.size)
+        assert(value.filmsList[0] == EXAMPLE_FILM_MODEL)
     }
 
     @Test
@@ -85,7 +85,7 @@ class FilmsListViewModelTest {
     }
 
     companion object {
-        private val EXAMPLE_MOVIE_MODEL = FilmDomainModel(
+        private val EXAMPLE_FILM_MODEL = FilmDomainModel(
             1,
             MovieType.MOVIE,
             "Lion King",

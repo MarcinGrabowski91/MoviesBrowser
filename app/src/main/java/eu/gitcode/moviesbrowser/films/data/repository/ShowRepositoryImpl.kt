@@ -26,7 +26,7 @@ class ShowRepositoryImpl : ShowRepository {
         )
     }
 
-    override suspend fun getShowDetails(): ShowDetailsDomainModel {
+    override suspend fun getShowDetails(showId: Long): ShowDetailsDomainModel {
         TODO("Not yet implemented")
     }
 }
