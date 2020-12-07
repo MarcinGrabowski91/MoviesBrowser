@@ -18,7 +18,6 @@ data class MovieDetailsDataModel(
     val status: String,
     val tagline: String,
     val title: String,
-    val trailer: Any,
     val updated_at: String,
     val votes: Int,
     val year: Int
@@ -47,7 +46,6 @@ fun MovieDetailsDataModel.toDomainModel() = MovieDetailDomainModel(
     status = status,
     tagline = tagline,
     title = title,
-    trailer = trailer,
     updatedAt = updated_at,
     votes = votes,
     year = year

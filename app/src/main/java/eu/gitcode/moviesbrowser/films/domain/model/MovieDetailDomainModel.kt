@@ -16,7 +16,6 @@ data class MovieDetailDomainModel(
     val status: String,
     val tagline: String,
     val title: String,
-    val trailer: Any,
     val updatedAt: String,
     val votes: Int,
     val year: Int

@@ -20,7 +20,6 @@ data class ShowDetailsDataModel(
     val runtime: Int,
     val status: String,
     val title: String,
-    val trailer: Any,
     val updated_at: String,
     val votes: Int,
     val year: Int
@@ -58,7 +57,6 @@ fun ShowDetailsDataModel.toDomainModel() = ShowDetailsDomainModel(
     runtime = runtime,
     status = status,
     title = title,
-    trailer = trailer,
     updatedAt = updated_at,
     votes = votes,
     year = year

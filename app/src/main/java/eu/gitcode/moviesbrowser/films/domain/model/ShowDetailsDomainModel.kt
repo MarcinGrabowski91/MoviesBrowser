@@ -18,7 +18,6 @@ data class ShowDetailsDomainModel(
     val runtime: Int,
     val status: String,
     val title: String,
-    val trailer: Any,
     val updatedAt: String,
     val votes: Int,
     val year: Int
