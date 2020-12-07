@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
 import eu.gitcode.moviesbrowser.R
 import eu.gitcode.moviesbrowser.databinding.FilmsListFragmentBinding
 import eu.gitcode.moviesbrowser.films.presentation.movie.MovieFragment
@@ -22,7 +21,6 @@ class FilmsListFragment : Fragment(R.layout.films_list_fragment),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
-        setupAdapter()
         setupViewState()
         viewModel.loadData()
     }
@@ -42,6 +40,7 @@ class FilmsListFragment : Fragment(R.layout.films_list_fragment),
     }
 
     private fun setupViews() {
+        binding.filmsRecyclerView.adapter = filmsAdapter
         binding.moviesListRefreshLay.setOnRefreshListener { viewModel.loadData() }
     }
 
@@ -57,13 +56,6 @@ class FilmsListFragment : Fragment(R.layout.films_list_fragment),
                 }
             }
         })
-    }
-
-    private fun setupAdapter() {
-        binding.filmsRecyclerView.apply {
-            adapter = filmsAdapter
-            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        }
     }
 
     companion object {

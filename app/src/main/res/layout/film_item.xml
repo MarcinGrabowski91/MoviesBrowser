@@ -2,32 +2,47 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/randomId"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="4dp"
     android:background="?colorSecondary"
     android:clickable="true"
     android:elevation="12dp"
-    android:layout_margin="4dp"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
+    android:theme="@style/Theme.MoviesBrowser"
     app:cardCornerRadius="4dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:orientation="vertical">
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/movieItemTitleHeader"
             style="@style/MovieHeaderStyle"
-            android:text="@string/title" />
+            android:text="@string/title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/filmType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="true"
+            android:textSize="@dimen/font_size_xxxl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Movie" />
 
         <TextView
             android:id="@+id/movieItemTitle"
             style="@style/MovieContentStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movieItemTitleHeader"
             tools:text="Lion King" />
 
         <TextView
@@ -35,13 +50,17 @@
             style="@style/MovieHeaderStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/year" />
+            android:text="@string/year"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movieItemTitle" />
 
         <TextView
             android:id="@+id/movieItemYear"
             style="@style/MovieContentStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movieItemYearHeader"
             tools:text="1994" />
 
         <TextView
@@ -49,13 +68,17 @@
             style="@style/MovieHeaderStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/watchers" />
+            android:text="@string/watchers"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movieItemYear" />
 
         <TextView
             android:id="@+id/movieItemWatchers"
             style="@style/MovieContentStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movieItemWatchersHeader"
             tools:text="15203" />
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
