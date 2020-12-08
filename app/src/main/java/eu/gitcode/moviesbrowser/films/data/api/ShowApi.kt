@@ -14,7 +14,10 @@ interface ShowApi {
     ): List<ShowDataModel>
 
     @GET("shows/{id}")
-    suspend fun getShowSummary(@Path("id") id: Long): ShowDetailsDataModel
+    suspend fun getShowSummary(
+        @Path("id") id: Long,
+        @Query("extended") extended: String = "full"
+    ): ShowDetailsDataModel
 
     companion object {
         private const val DEFAULT_PAGE_SIZE = 5

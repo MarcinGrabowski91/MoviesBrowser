@@ -5,21 +5,21 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class MovieDetailsDataModel(
-    val available_translations: List<String>,
-    val certification: String,
-    val comment_count: Int,
-    val country: String,
-    val genres: List<String>,
+    val available_translations: List<String>? = null,
+    val certification: String? = null,
+    val comment_count: Int? = null,
+    val country: String? = null,
+    val genres: List<String>? = null,
     val homepage: String? = null,
     val ids: Ids,
-    val language: String,
+    val language: String? = null,
     val overview: String,
     val rating: Float,
     val trailer: String? = null,
-    val released: String,
-    val runtime: Int,
-    val status: String,
-    val tagline: String,
+    val released: String? = null,
+    val runtime: Int? = null,
+    val status: String? = null,
+    val tagline: String? = null,
     val title: String,
     val updated_at: String,
     val votes: Int,
@@ -27,15 +27,15 @@ data class MovieDetailsDataModel(
 ) {
     @Serializable
     data class Ids(
-        val imdb: String,
-        val slug: String,
-        val tmdb: Long,
+        val imdb: String? = null,
+        val slug: String? = null,
+        val tmdb: Long? = null,
         val trakt: Long
     )
 }
 
 fun MovieDetailsDataModel.toDomainModel() = MovieDetailDomainModel(
-    traktId = ids.trakt,
+    id = ids.trakt,
     availableTranslations = available_translations,
     certification = certification,
     commentCount = comment_count,

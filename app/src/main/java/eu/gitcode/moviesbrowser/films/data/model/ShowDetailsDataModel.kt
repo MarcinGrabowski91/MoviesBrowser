@@ -1,36 +1,40 @@
 package eu.gitcode.moviesbrowser.films.data.model
 
 import eu.gitcode.moviesbrowser.films.domain.model.ShowDetailsDomainModel
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class ShowDetailsDataModel(
-    val aired_episodes: Int,
-    val airs: Airs,
-    val available_translations: List<String>,
-    val certification: String,
-    val comment_count: Int,
-    val country: String,
-    val first_aired: String,
-    val genres: List<String>,
+    val aired_episodes: Int? = null,
+    val airs: Airs? = null,
+    val available_translations: List<String>? = null,
+    val certification: String? = null,
+    val comment_count: Int? = null,
+    val country: String? = null,
+    val first_aired: String? = null,
+    val genres: List<String>? = null,
     val homepage: String? = null,
     val ids: Ids,
-    val language: String,
+    val language: String? = null,
     val trailer: String? = null,
-    val network: String,
+    val network: String? = null,
     val overview: String,
     val rating: Float,
-    val runtime: Int,
-    val status: String,
+    val runtime: Int? = null,
+    val status: String? = null,
     val title: String,
     val updated_at: String,
     val votes: Int,
     val year: Int
 ) {
+    @Serializable
     data class Airs(
         val day: String,
         val time: String,
         val timezone: String
     )
 
+    @Serializable
     data class Ids(
         val imdb: String,
         val slug: String,
@@ -41,9 +45,9 @@ data class ShowDetailsDataModel(
 }
 
 fun ShowDetailsDataModel.toDomainModel() = ShowDetailsDomainModel(
-    traktId = ids.trakt,
+    id = ids.trakt,
     airedEpisodes = aired_episodes,
-    airs = airs.toDomainModel(),
+    airs = airs?.toDomainModel(),
     availableTranslations = available_translations,
     certification = certification,
     commentCount = comment_count,

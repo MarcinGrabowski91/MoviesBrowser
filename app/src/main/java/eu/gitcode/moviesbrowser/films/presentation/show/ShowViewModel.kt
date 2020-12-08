@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import eu.gitcode.moviesbrowser.base.domain.BaseUseCase
 import eu.gitcode.moviesbrowser.films.domain.usecase.GetShowDetailsUseCase
 import kotlinx.coroutines.launch
 
@@ -16,25 +15,23 @@ class ShowViewModel(
     val showData = MutableLiveData<ShowState>()
 
     var showId: Long?
-        get() = savedStateHandle.get(SHOW_ID_KEY)
-        set(value) = savedStateHandle.set(SHOW_ID_KEY, value)
+        get() = savedStateHandle.get(MOVIE_ID_KEY)
+        set(value) = savedStateHandle.set(MOVIE_ID_KEY, value)
 
     fun loadData() {
         showId?.let {
             viewModelScope.launch {
-                getShowDetailsUseCase.execute(it).also { result ->
-                    when (result) {
-                        is BaseUseCase.Result.Success -> showData.value =
-                            ShowState.Success(result.data)
-                        is BaseUseCase.Result.Error -> showData.value =
-                            ShowState.Error(result.error)
-                    }
+                try {
+                    showData.value = ShowState.Success(getShowDetailsUseCase.execute(it))
+                } catch (e: Exception) {
+                    showData.value = ShowState.Error(Throwable())
                 }
+
             }
         } ?: run { showData.value = ShowState.Error(Throwable()) }
     }
 
     companion object {
-        private const val SHOW_ID_KEY = "showId"
+        private const val MOVIE_ID_KEY = "movieId"
     }
 }

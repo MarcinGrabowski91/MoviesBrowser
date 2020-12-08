@@ -38,7 +38,7 @@ class MovieFragment : Fragment(R.layout.details_fragment) {
                     binding.detailsFragmentOverview.text = state.movie.overview
                     binding.detailsFragmentRatingBar.rating = state.movie.rating
                     binding.detailsFragmentYear.text = state.movie.year.toString()
-                    state.movie.genres.forEachIndexed { index, s ->
+                    state.movie.genres?.forEachIndexed { index, s ->
                         binding.detailsFragmentGenres.text =
                             binding.detailsFragmentGenres.text.toString() + s
                         if (index != state.movie.genres.lastIndex) {
@@ -57,12 +57,9 @@ class MovieFragment : Fragment(R.layout.details_fragment) {
     }
 
     private fun setupViews() {
-        binding.loadingLay.setBackgroundColor(
-            ResourcesUtils.getColorFromAttribute(
-                binding.loadingLay,
-                R.attr.colorMovie
-            )
-        )
+        val bgColor = ResourcesUtils.getColorFromAttribute(binding.loadingLay, R.attr.colorMovie)
+        binding.detailsMainLay.setBackgroundColor(bgColor)
+        binding.loadingLay.setBackgroundColor(bgColor)
     }
 
     companion object {

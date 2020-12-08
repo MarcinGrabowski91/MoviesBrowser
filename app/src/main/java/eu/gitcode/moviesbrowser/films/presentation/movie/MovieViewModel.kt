@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import eu.gitcode.moviesbrowser.base.domain.BaseUseCase
 import eu.gitcode.moviesbrowser.films.domain.usecase.GetMovieDetailsUseCase
 import kotlinx.coroutines.launch
 
@@ -22,13 +21,10 @@ class MovieViewModel(
     fun loadData() {
         movieId?.let {
             viewModelScope.launch {
-                getMovieDetailsUseCase.execute(it).also { result ->
-                    when (result) {
-                        is BaseUseCase.Result.Success -> movieData.value =
-                            MovieState.Success(result.data)
-                        is BaseUseCase.Result.Error -> movieData.value =
-                            MovieState.Error(result.error)
-                    }
+                try {
+                    movieData.value = MovieState.Success(getMovieDetailsUseCase.execute(it))
+                } catch (e: Exception) {
+                    movieData.value = MovieState.Error(Throwable())
                 }
             }
         } ?: run { movieData.value = MovieState.Error(Throwable()) }
@@ -38,3 +34,4 @@ class MovieViewModel(
         private const val MOVIE_ID_KEY = "movieId"
     }
 }
+

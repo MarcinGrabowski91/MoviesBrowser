@@ -17,7 +17,7 @@ object NetworkUtils {
     fun createRetrofit(client: OkHttpClient): Retrofit {
         val contentType = "application/json".toMediaType()
         return Retrofit.Builder()
-            .addConverterFactory(Json.asConverterFactory(contentType))
+            .addConverterFactory(Json { ignoreUnknownKeys = true }.asConverterFactory(contentType))
             .baseUrl(BASE_URL)
             .client(client)
             .build()
@@ -47,5 +47,5 @@ object NetworkUtils {
     private const val API_VERSION_VALUE = "2"
     private const val API_KEY_KEY = "trakt-api-key"
     private const val API_KEY_VALUE =
-        "xxxx"
+        "f5c3bd3c22d95d4ae591b256e73a31e2d2cd69879d0a121409c0bedd179ccdf8"
 }

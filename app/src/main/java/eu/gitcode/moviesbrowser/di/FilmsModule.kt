@@ -16,7 +16,7 @@ val filmsModule = module {
     }
 
     single<ShowRepository> {
-        ShowRepositoryImpl()
+        ShowRepositoryImpl(showApi = get())
     }
 
     single {

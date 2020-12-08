@@ -38,7 +38,7 @@ class ShowFragment : Fragment(R.layout.details_fragment) {
                     binding.detailsFragmentOverview.text = state.show.overview
                     binding.detailsFragmentRatingBar.rating = state.show.rating
                     binding.detailsFragmentYear.text = state.show.year.toString()
-                    state.show.genres.forEachIndexed { index, s ->
+                    state.show.genres?.forEachIndexed { index, s ->
                         binding.detailsFragmentGenres.text =
                             binding.detailsFragmentGenres.text.toString() + s
                         if (index != state.show.genres.lastIndex) {
@@ -57,12 +57,9 @@ class ShowFragment : Fragment(R.layout.details_fragment) {
     }
 
     private fun setupViews() {
-        binding.loadingLay.setBackgroundColor(
-            ResourcesUtils.getColorFromAttribute(
-                binding.loadingLay,
-                R.attr.colorShow
-            )
-        )
+        val bgColor = ResourcesUtils.getColorFromAttribute(binding.loadingLay, R.attr.colorShow)
+        binding.detailsMainLay.setBackgroundColor(bgColor)
+        binding.loadingLay.setBackgroundColor(bgColor)
     }
 
     companion object {
