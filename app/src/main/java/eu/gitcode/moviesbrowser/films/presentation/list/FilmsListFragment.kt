@@ -3,9 +3,11 @@ package eu.gitcode.moviesbrowser.films.presentation.list
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import eu.gitcode.moviesbrowser.R
 import eu.gitcode.moviesbrowser.databinding.FilmsListFragmentBinding
+import eu.gitcode.moviesbrowser.films.domain.enum.OrderType
 import eu.gitcode.moviesbrowser.films.presentation.movie.MovieFragment
 import eu.gitcode.moviesbrowser.films.presentation.show.ShowFragment
 import eu.gitcode.moviesbrowser.utils.viewBinding
@@ -43,6 +45,7 @@ class FilmsListFragment : Fragment(R.layout.films_list_fragment),
         binding.filmsRecyclerView.adapter = filmsAdapter
         binding.moviesListRefreshLay.setOnRefreshListener { viewModel.loadFilmsData() }
         binding.moviesListRefreshLay.isRefreshing = true
+        binding.orderBtn.setOnClickListener { openOrderChooser() }
     }
 
     private fun setupViewState() {
@@ -57,6 +60,21 @@ class FilmsListFragment : Fragment(R.layout.films_list_fragment),
                 }
             }
         })
+    }
+
+    private fun openOrderChooser() {
+        val ordersArray =
+            listOf(
+                getString(OrderType.ASCENDING.getResId()),
+                getString(OrderType.DESCENDING.getResId())
+            ).toTypedArray()
+        AlertDialog.Builder(requireContext())
+            .setItems(ordersArray) { _, which ->
+                val orderType = OrderType.values()[which]
+                viewModel.orderType = orderType
+                filmsAdapter.setOrder(orderType)
+            }
+            .create().show()
     }
 
     companion object {

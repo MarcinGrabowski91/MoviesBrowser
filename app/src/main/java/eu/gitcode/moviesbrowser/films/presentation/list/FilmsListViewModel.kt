@@ -37,15 +37,25 @@ class FilmsListViewModel(
         }
         set(value) = savedStateHandle.set(ORDER_TYPE_KEY, value.name)
 
-    fun loadFilmsData() {
-        loadData(getMoviesListUseCase.execute(), getShowsListUseCase.execute())
-    }
+    var startYear: String
+        get() = savedStateHandle.get<String>(START_YEAR_KEY) ?: ""
+        set(value) = savedStateHandle.set(START_YEAR_KEY, value)
 
-    fun loadFilmsDataByYear(startYear: String, endYear: String) {
-        loadData(
-            getMoviesListUseCase.execute(startYear, endYear),
-            getShowsListUseCase.execute(startYear, endYear)
-        )
+    var endYear: String
+        get() = savedStateHandle.get<String>(END_YEAR_KEY) ?: ""
+        set(value) = savedStateHandle.set(END_YEAR_KEY, value)
+
+    fun loadFilmsData() {
+        if (startYear.isNotEmpty() && endYear.isNotEmpty()) {
+            val movies = getMoviesListUseCase.execute(startYear, endYear)
+            val shows = getShowsListUseCase.execute(startYear, endYear)
+            loadData(movies, shows)
+        } else {
+            val movies = getMoviesListUseCase.execute()
+            val shows = getShowsListUseCase.execute()
+            loadData(movies, shows)
+        }
+
     }
 
     private fun loadData(
@@ -54,6 +64,7 @@ class FilmsListViewModel(
     ) {
         viewModelScope.launch {
             combine(movies, shows) { a, b -> a + b }
+                .flowOn(Dispatchers.IO)
                 .map { it ->
                     if (orderType == OrderType.DESCENDING) {
                         it.sortedByDescending { it.watchers }
@@ -61,7 +72,7 @@ class FilmsListViewModel(
                         it.sortedBy { it.watchers }
                     }
                 }
-                .flowOn(Dispatchers.IO)
+                .flowOn(Dispatchers.Default)
                 .catch { cause ->
                     Timber.e(cause)
                     filmsListData.value = FilmsListState.Error(cause)
@@ -71,7 +82,9 @@ class FilmsListViewModel(
     }
 
 
-    private companion object {
-        private const val ORDER_TYPE_KEY = "sortTypeKey"
+    companion object {
+        const val ORDER_TYPE_KEY = "sortTypeKey"
+        const val START_YEAR_KEY = "startYearKey"
+        const val END_YEAR_KEY = "endYearKey"
     }
 }

@@ -50,10 +50,12 @@ class FilmsListViewModelTest {
         //given
         coEvery { getMoviesListUseCase.execute() } returns flow { emit(listOf<FilmDomainModel>()) }
         coEvery { getShowsListUseCase.execute() } returns flow { emit(listOf<FilmDomainModel>()) }
-        every { savedStateHandle.get<String>(any()) } returns ORDER_TYPE
+        every { savedStateHandle.get<String>(FilmsListViewModel.ORDER_TYPE_KEY) } returns ORDER_TYPE
+        every { savedStateHandle.get<String>(FilmsListViewModel.START_YEAR_KEY) } returns ""
+        every { savedStateHandle.get<String>(FilmsListViewModel.END_YEAR_KEY) } returns ""
 
         // when
-        filmsListViewModel.loadData()
+        filmsListViewModel.loadFilmsData()
 
         // then
         coVerify { getMoviesListUseCase.execute() }
@@ -66,10 +68,12 @@ class FilmsListViewModelTest {
         coEvery { getMoviesListUseCase.execute() } returns flow { emit(moviesList) }
         coEvery { getShowsListUseCase.execute() } returns flow { emit(listOf<FilmDomainModel>()) }
         every { savedStateHandle.get<String>(any()) } returns ORDER_TYPE
+        every { savedStateHandle.get<String>(FilmsListViewModel.START_YEAR_KEY) } returns ""
+        every { savedStateHandle.get<String>(FilmsListViewModel.END_YEAR_KEY) } returns ""
 
         runBlockingTest {
             // when
-            filmsListViewModel.loadData()
+            filmsListViewModel.loadFilmsData()
             // then
             advanceTimeBy(Duration.of(1, ChronoUnit.MINUTES).toMillis())
             val value = filmsListViewModel.filmsListData.value
@@ -84,9 +88,11 @@ class FilmsListViewModelTest {
         coEvery { getMoviesListUseCase.execute() } returns flow { error(Throwable()) }
         coEvery { getShowsListUseCase.execute() } returns flow { emit(listOf<FilmDomainModel>()) }
         every { savedStateHandle.get<String>(any()) } returns ORDER_TYPE
+        every { savedStateHandle.get<String>(FilmsListViewModel.START_YEAR_KEY) } returns ""
+        every { savedStateHandle.get<String>(FilmsListViewModel.END_YEAR_KEY) } returns ""
 
         // when
-        filmsListViewModel.loadData()
+        filmsListViewModel.loadFilmsData()
 
         // then
         assert(filmsListViewModel.filmsListData.value is FilmsListState.Error)

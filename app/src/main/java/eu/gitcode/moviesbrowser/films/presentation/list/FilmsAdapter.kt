@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import eu.gitcode.moviesbrowser.R
 import eu.gitcode.moviesbrowser.films.domain.enum.MovieType
+import eu.gitcode.moviesbrowser.films.domain.enum.OrderType
 import eu.gitcode.moviesbrowser.films.domain.model.FilmDomainModel
 
 internal class FilmsAdapter(private val movieAdapterListener: MoviesAdapterListener) :
@@ -33,6 +34,15 @@ internal class FilmsAdapter(private val movieAdapterListener: MoviesAdapterListe
     fun setItems(moviesList: List<FilmDomainModel>) {
         this.moviesList.clear()
         this.moviesList.addAll(moviesList)
+        notifyDataSetChanged()
+    }
+
+    fun setOrder(orderType: OrderType) {
+        if (orderType == OrderType.DESCENDING) {
+            moviesList.sortByDescending { it.watchers }
+        } else {
+            moviesList.sortBy { it.watchers }
+        }
         notifyDataSetChanged()
     }
 
