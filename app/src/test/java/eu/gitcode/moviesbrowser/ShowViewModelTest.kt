@@ -2,7 +2,6 @@ package eu.gitcode.moviesbrowser
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
-import eu.gitcode.moviesbrowser.base.domain.BaseUseCase
 import eu.gitcode.moviesbrowser.films.domain.model.ShowDetailsDomainModel
 import eu.gitcode.moviesbrowser.films.domain.usecase.GetShowDetailsUseCase
 import eu.gitcode.moviesbrowser.films.presentation.show.ShowState
@@ -13,11 +12,15 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import java.time.Duration
+import java.time.temporal.ChronoUnit
 
 @RunWith(JUnit4::class)
 class ShowViewModelTest {
@@ -41,9 +44,7 @@ class ShowViewModelTest {
     @Test
     fun `verify getMoviesUseCase execution`() {
         //given
-        coEvery { getShowDetailsUseCase.execute(MOVIE_ID) } returns BaseUseCase.Result.Success(
-            EXAMPLE_SHOW_MODEL
-        )
+        coEvery { getShowDetailsUseCase.execute(MOVIE_ID) } returns flow { EXAMPLE_SHOW_MODEL }
         every { savedStateHandle.get<Long>(any()) } returns MOVIE_ID
 
         // when
@@ -56,25 +57,24 @@ class ShowViewModelTest {
     @Test
     fun `verify state value when getMovieDetailsUseCase returns a value`() {
         //given
-        coEvery { getShowDetailsUseCase.execute(MOVIE_ID) } returns BaseUseCase.Result.Success(
-            EXAMPLE_SHOW_MODEL
-        )
+        coEvery { getShowDetailsUseCase.execute(MOVIE_ID) } returns flow { emit(EXAMPLE_SHOW_MODEL) }
         every { savedStateHandle.get<Long>(any()) } returns MOVIE_ID
 
-        // showViewModel
-        showViewModel.loadData()
+        runBlockingTest {
+            // showViewModel
+            showViewModel.loadData()
 
-        // then
-        val value = showViewModel.showData.value
-        assert((value as ShowState.Success).show == EXAMPLE_SHOW_MODEL)
+            // then
+            advanceTimeBy(Duration.of(1, ChronoUnit.MINUTES).toMillis())
+            val value = showViewModel.showData.value
+            assert((value as ShowState.Success).show == EXAMPLE_SHOW_MODEL)
+        }
     }
 
     @Test
     fun `verify state value when getMoviesUseCase returns an error`() {
         //given
-        coEvery { getShowDetailsUseCase.execute(MOVIE_ID) } returns BaseUseCase.Result.Error(
-            Throwable()
-        )
+        coEvery { getShowDetailsUseCase.execute(MOVIE_ID) } returns flow { error(Throwable()) }
         every { savedStateHandle.get<Long>(any()) } returns MOVIE_ID
 
         // when
@@ -87,9 +87,7 @@ class ShowViewModelTest {
     @Test
     fun `verify state value when movieId is null`() {
         //given
-        coEvery { getShowDetailsUseCase.execute(MOVIE_ID) } returns BaseUseCase.Result.Success(
-            EXAMPLE_SHOW_MODEL
-        )
+        coEvery { getShowDetailsUseCase.execute(MOVIE_ID) } returns flow { EXAMPLE_SHOW_MODEL }
         every { savedStateHandle.get<Long>(any()) } returns null
 
         // when
@@ -102,7 +100,7 @@ class ShowViewModelTest {
     companion object {
         private const val MOVIE_ID: Long = 1
         private val EXAMPLE_SHOW_MODEL = ShowDetailsDomainModel(
-            traktId = 0,
+            id = 0,
             airedEpisodes = 0,
             airs = ShowDetailsDomainModel.Airs(
                 day = "",

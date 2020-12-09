@@ -11,4 +11,6 @@
     <string name="genres">Genres</string>
     <string name="votes">Votes</string>
     <string name="country">Country</string>
+
+    <string name="error_default">Something went wrong.</string>
 </resources>

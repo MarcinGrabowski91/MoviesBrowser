@@ -5,7 +5,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import eu.gitcode.moviesbrowser.films.domain.usecase.GetShowDetailsUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class ShowViewModel(
     private val getShowDetailsUseCase: GetShowDetailsUseCase,
@@ -21,12 +26,13 @@ class ShowViewModel(
     fun loadData() {
         showId?.let {
             viewModelScope.launch {
-                try {
-                    showData.value = ShowState.Success(getShowDetailsUseCase.execute(it))
-                } catch (e: Exception) {
-                    showData.value = ShowState.Error(Throwable())
-                }
-
+                getShowDetailsUseCase.execute(it)
+                    .flowOn(Dispatchers.IO)
+                    .catch { cause ->
+                        Timber.e(cause)
+                        showData.value = ShowState.Error(cause)
+                    }
+                    .collect { value -> showData.value = ShowState.Success(value) }
             }
         } ?: run { showData.value = ShowState.Error(Throwable()) }
     }

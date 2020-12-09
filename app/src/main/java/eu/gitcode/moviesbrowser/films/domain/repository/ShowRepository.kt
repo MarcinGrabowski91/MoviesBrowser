@@ -2,9 +2,10 @@ package eu.gitcode.moviesbrowser.films.domain.repository
 
 import eu.gitcode.moviesbrowser.films.domain.model.FilmDomainModel
 import eu.gitcode.moviesbrowser.films.domain.model.ShowDetailsDomainModel
+import kotlinx.coroutines.flow.Flow
 
 interface ShowRepository {
-    suspend fun getShowsList(): List<FilmDomainModel>
+    fun getShowsList(): Flow<List<FilmDomainModel>>
 
-    suspend fun getShowDetails(showId: Long): ShowDetailsDomainModel
+    fun getShowDetails(showId: Long): Flow<ShowDetailsDomainModel>
 }

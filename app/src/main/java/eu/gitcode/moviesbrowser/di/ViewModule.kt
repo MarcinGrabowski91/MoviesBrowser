@@ -11,7 +11,8 @@ val viewModule = module {
     viewModel {
         FilmsListViewModel(
             getMoviesListUseCase = get(),
-            getShowsListUseCase = get()
+            getShowsListUseCase = get(),
+            savedStateHandle = get()
         )
     }
 

@@ -135,6 +135,15 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <TextView
+        android:id="@+id/errorView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/green"
+        android:textAlignment="center"
+        android:text="@string/error_default"
+        android:visibility="gone" />
+
     <FrameLayout
         android:id="@+id/loadingLay"
         android:layout_width="match_parent"

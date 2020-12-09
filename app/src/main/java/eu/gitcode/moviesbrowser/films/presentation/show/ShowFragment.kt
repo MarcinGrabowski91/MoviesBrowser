@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import eu.gitcode.moviesbrowser.R
 import eu.gitcode.moviesbrowser.databinding.DetailsFragmentBinding
@@ -31,6 +32,7 @@ class ShowFragment : Fragment(R.layout.details_fragment) {
     @SuppressLint("SetTextI18n")
     private fun setupViewState() {
         viewModel.showData.observe(viewLifecycleOwner, { state ->
+            binding.errorView.isVisible = state is Error
             binding.loadingLay.visibility = View.GONE
             when (state) {
                 is ShowState.Success -> {
