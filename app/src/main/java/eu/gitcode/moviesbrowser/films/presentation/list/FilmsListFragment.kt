@@ -22,7 +22,7 @@ class FilmsListFragment : Fragment(R.layout.films_list_fragment),
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         setupViewState()
-        viewModel.loadData()
+        viewModel.loadFilmsData()
     }
 
     override fun onMovieClicked(id: Long) {
@@ -41,7 +41,7 @@ class FilmsListFragment : Fragment(R.layout.films_list_fragment),
 
     private fun setupViews() {
         binding.filmsRecyclerView.adapter = filmsAdapter
-        binding.moviesListRefreshLay.setOnRefreshListener { viewModel.loadData() }
+        binding.moviesListRefreshLay.setOnRefreshListener { viewModel.loadFilmsData() }
         binding.moviesListRefreshLay.isRefreshing = true
     }
 

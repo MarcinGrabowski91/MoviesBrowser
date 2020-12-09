@@ -5,9 +5,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import eu.gitcode.moviesbrowser.films.domain.enum.OrderType
+import eu.gitcode.moviesbrowser.films.domain.model.FilmDomainModel
 import eu.gitcode.moviesbrowser.films.domain.usecase.GetMoviesListUseCase
 import eu.gitcode.moviesbrowser.films.domain.usecase.GetShowsListUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
@@ -35,9 +37,23 @@ class FilmsListViewModel(
         }
         set(value) = savedStateHandle.set(ORDER_TYPE_KEY, value.name)
 
-    fun loadData() {
+    fun loadFilmsData() {
+        loadData(getMoviesListUseCase.execute(), getShowsListUseCase.execute())
+    }
+
+    fun loadFilmsDataByYear(startYear: String, endYear: String) {
+        loadData(
+            getMoviesListUseCase.execute(startYear, endYear),
+            getShowsListUseCase.execute(startYear, endYear)
+        )
+    }
+
+    private fun loadData(
+        movies: Flow<List<FilmDomainModel>>,
+        shows: Flow<List<FilmDomainModel>>
+    ) {
         viewModelScope.launch {
-            combine(getMoviesListUseCase.execute(), getShowsListUseCase.execute()) { a, b -> a + b }
+            combine(movies, shows) { a, b -> a + b }
                 .map { it ->
                     if (orderType == OrderType.DESCENDING) {
                         it.sortedByDescending { it.watchers }
@@ -53,6 +69,7 @@ class FilmsListViewModel(
                 .collect { value -> filmsListData.value = FilmsListState.Success(value) }
         }
     }
+
 
     private companion object {
         private const val ORDER_TYPE_KEY = "sortTypeKey"

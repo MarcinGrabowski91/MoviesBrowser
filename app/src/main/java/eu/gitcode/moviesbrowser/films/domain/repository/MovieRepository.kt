@@ -7,5 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface MovieRepository {
     fun getMoviesList(): Flow<List<FilmDomainModel>>
 
+    fun getMoviesList(startYear: String, endYear: String): Flow<List<FilmDomainModel>>
+
     fun getMovieDetails(movieId: Long): Flow<MovieDetailDomainModel>
 }

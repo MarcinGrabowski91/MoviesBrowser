@@ -6,4 +6,7 @@ class GetMoviesListUseCase(
     private val movieRepository: MovieRepository
 ) {
     fun execute() = movieRepository.getMoviesList()
+
+    fun execute(startYear: String, endYear: String) =
+        movieRepository.getMoviesList(startYear, endYear)
 }
